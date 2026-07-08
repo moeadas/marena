@@ -1,0 +1,21 @@
+{
+  "name": "MARÉNA Care",
+  "short_name": "MARÉNA",
+  "description": "Care coordination platform for beneficiaries, caregivers, and providers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F2EADD",
+  "theme_color": "#2C5F5D",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/marena-mark.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["health", "medical"],
+  "lang": "en",
+  "dir": "ltr"
+}

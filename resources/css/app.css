@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base ─────────────────────────────────────── */
+@layer base {
+    body {
+        @apply bg-marena-cream text-marena-ink antialiased;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply text-marena-teal-deep font-semibold;
+    }
+
+    /* Accessibility: focus-visible outlines */
+    *:focus-visible {
+        @apply outline-none ring-2 ring-marena-teal ring-offset-2 ring-offset-marena-cream rounded;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+/* ─── Components ────────────────────────────────── */
+@layer components {
+    /* Cards */
+    .card {
+        @apply bg-marena-ivory rounded-2xl shadow-card p-4;
+    }
+
+    .card-tight {
+        @apply bg-marena-ivory rounded-xl shadow-soft p-3;
+    }
+
+    /* Buttons */
+    .btn {
+        @apply inline-flex items-center justify-center gap-2 px-5 h-12 rounded-xl font-medium text-base transition-all duration-200 select-none;
+    }
+
+    .btn-primary {
+        @apply btn bg-marena-teal text-white hover:bg-marena-teal-deep active:scale-[0.98];
+    }
+
+    .btn-secondary {
+        @apply btn bg-marena-sage-mist text-marena-teal-deep hover:bg-marena-sage-light active:scale-[0.98];
+    }
+
+    .btn-outline {
+        @apply btn border border-marena-ink-30 text-marena-ink-70 hover:border-marena-teal hover:text-marena-teal bg-transparent;
+    }
+
+    .btn-danger {
+        @apply btn bg-marena-danger text-white hover:opacity-90 active:scale-[0.98];
+    }
+
+    .btn-ghost {
+        @apply btn text-marena-ink-50 hover:text-marena-teal bg-transparent;
+    }
+
+    .btn-sm {
+        @apply h-9 px-3 text-sm rounded-lg;
+    }
+
+    .btn-lg {
+        @apply h-14 px-8 text-lg;
+    }
+
+    /* Inputs */
+    .input {
+        @apply w-full h-12 rounded-lg border border-marena-ink-30 bg-white px-4 text-marena-ink placeholder:text-marena-ink-50
+               focus:border-marena-teal focus:ring-2 focus:ring-marena-teal/20 transition-colors;
+    }
+
+    .label {
+        @apply block text-sm font-medium text-marena-ink-70 mb-1.5;
+    }
+
+    /* Status badges */
+    .badge {
+        @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+    }
+
+    .badge-scheduled {
+        @apply badge bg-marena-info/10 text-marena-info;
+    }
+
+    .badge-completed {
+        @apply badge bg-marena-success/15 text-marena-success;
+    }
+
+    .badge-missed {
+        @apply badge bg-marena-danger/10 text-marena-danger;
+    }
+
+    .badge-cancelled {
+        @apply badge bg-marena-ink-10 text-marena-ink-50;
+    }
+
+    .badge-pending {
+        @apply badge bg-marena-warn/15 text-marena-warn;
+    }
+
+    .badge-critical {
+        @apply badge bg-marena-danger text-white;
+    }
+
+    /* Bottom navigation */
+    .bottom-nav {
+        @apply fixed bottom-0 left-0 right-0 z-50 bg-marena-ivory border-t border-marena-ink-10
+               flex items-center justify-around px-1 py-1
+               h-16 safe-bottom;
+    }
+
+    .bottom-nav-item {
+        @apply flex flex-col items-center justify-center gap-0.5 flex-1 h-full
+               text-marena-ink-50 transition-colors;
+    }
+
+    .bottom-nav-item.active {
+        @apply text-marena-teal;
+    }
+
+    .bottom-nav-item svg {
+        @apply w-6 h-6;
+    }
+
+    .bottom-nav-item span {
+        @apply text-[10px] font-medium;
+    }
+
+    /* Sidebar (admin) */
+    .sidebar {
+        @apply fixed left-0 top-0 bottom-0 w-64 bg-marena-teal-deep text-white
+               flex flex-col py-4 px-3 z-40 overflow-y-auto;
+    }
+
+    .sidebar-item {
+        @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium
+               text-marena-sage-light hover:bg-marena-teal/40 transition-colors;
+    }
+
+    .sidebar-item.active {
+        @apply bg-marena-teal text-white;
+    }
+
+    .sidebar-item svg {
+        @apply w-5 h-5 flex-shrink-0;
+    }
+
+    /* Section header */
+    .section-title {
+        @apply text-lg font-semibold text-marena-teal-deep;
+    }
+
+    /* Alert severity colors */
+    .alert-critical { @apply border-l-4 border-marena-danger; }
+    .alert-high { @apply border-l-4 border-marena-tan; }
+    .alert-medium { @apply border-l-4 border-marena-info; }
+    .alert-low { @apply border-l-4 border-marena-sage; }
+}
+
+/* ─── Utilities ─────────────────────────────────── */
+@layer utilities {
+    .safe-bottom {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    .safe-top {
+        padding-top: env(safe-area-inset-top, 0px);
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+/* ─── Custom Scrollbar ──────────────────────────── */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #A6B4B2;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #6B807E;
+}
+
+/* Scrollbar for Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #A6B4B2 transparent;
+}
