@@ -99,4 +99,28 @@ class Provider extends Model
     {
         return $this->hasMany(CrossProfessionalRequest::class, 'to_provider_id');
     }
+
+    // Get beneficiaries through care circles (via user_id)
+    public function careCircleBeneficiaries()
+    {
+        return Beneficiary::whereHas('careCircles', function ($q) {
+            $q->where('user_id', $this->user_id)->where('member_type', 'provider');
+        });
+    }
+
+    // Check if provider is in any care circle
+    public function scopeInCareCircleOf($query, $caregiverUserId)
+    {
+        $beneficiaryIds = \App\Models\CareCircle::where('user_id', $caregiverUserId)
+            ->where('member_type', 'caregiver')
+            ->where('status', 'active')
+            ->pluck('beneficiary_id');
+
+        return $query->whereIn('user_id', function ($subq) use ($beneficiaryIds) {
+            $subq->select('user_id')
+                ->from('care_circles')
+                ->whereIn('beneficiary_id', $beneficiaryIds)
+                ->where('member_type', 'provider');
+        });
+    }
 }

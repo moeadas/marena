@@ -17,32 +17,27 @@ class BeneficiaryController extends Controller
         $conversations = collect();
 
         try {
-            $todayInterventions = \App\Models\Intervention::where('beneficiary_id', $user->id)
+            $ben = \App\Models\Beneficiary::where('user_id', $user->id)->first();
+            $benId = $ben?->id ?? 0;
+
+            $todayInterventions = \App\Models\Intervention::where('beneficiary_id', $benId)
                 ->whereDate('scheduled_at', today())
                 ->with(['provider', 'service'])
                 ->orderBy('scheduled_at')
                 ->get();
 
-            $alerts = \App\Models\Alert::where('beneficiary_id', $user->id)
-                ->where('resolved', false)
+            $alerts = \App\Models\Alert::where('beneficiary_id', $benId)
+                ->where('is_read', false)
                 ->latest()
                 ->take(5)
                 ->get();
 
-            $lastService = \App\Models\Intervention::where('beneficiary_id', $user->id)
+            $lastService = \App\Models\Intervention::where('beneficiary_id', $benId)
                 ->where('status', 'completed')
                 ->with(['provider', 'service'])
                 ->latest('completed_at')
                 ->first();
-
-            $conversations = \App\Models\Conversation::where('participant_id', $user->id)
-                ->with(['participant'])
-                ->latest('last_message_at')
-                ->take(5)
-                ->get();
-        } catch (\Exception $e) {
-            // Models may not have data yet — that's fine
-        }
+        } catch (\Exception $e) {}
 
         return view('dashboard.beneficiary', compact('todayInterventions', 'alerts', 'lastService', 'conversations'));
     }
@@ -51,11 +46,14 @@ class BeneficiaryController extends Controller
     {
         $members = collect();
         try {
-            $members = \App\Models\CareCircle::where('beneficiary_id', Auth::id())
-                ->with('member')->get()->map(function ($c) {
+            $ben = \App\Models\Beneficiary::where('user_id', Auth::id())->first();
+            $benId = $ben?->id ?? 0;
+
+            $members = \App\Models\CareCircle::where('beneficiary_id', $benId)
+                ->with(['user', 'beneficiary'])->get()->map(function ($c) {
                     return (object)[
-                        'name' => $c->member?->name ?? 'Unknown',
-                        'role' => $c->role ?? '',
+                        'name' => $c->user?->name ?? 'Unknown',
+                        'role' => $c->member_type ?? '',
                         'status' => $c->status ?? 'active',
                         'permissions' => $c->permissions ?? [],
                     ];
@@ -69,7 +67,8 @@ class BeneficiaryController extends Controller
     {
         $interventions = collect();
         try {
-            $interventions = \App\Models\Intervention::where('beneficiary_id', Auth::id())
+            $ben = \App\Models\Beneficiary::where('user_id', Auth::id())->first();
+            $interventions = \App\Models\Intervention::where('beneficiary_id', $ben?->id ?? 0)
                 ->with(['provider', 'service'])
                 ->latest('scheduled_at')
                 ->paginate(15);
@@ -107,7 +106,8 @@ class BeneficiaryController extends Controller
     {
         $reminders = collect();
         try {
-            $reminders = \App\Models\Reminder::where('beneficiary_id', Auth::id())
+            $ben = \App\Models\Beneficiary::where('user_id', Auth::id())->first();
+            $reminders = \App\Models\Reminder::where('beneficiary_id', $ben?->id ?? 0)
                 ->upcoming()->orderBy('scheduled_at')->get();
         } catch (\Exception $e) {}
 

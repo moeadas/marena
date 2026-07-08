@@ -18,7 +18,7 @@
                 ['label' => 'Pause Service', 'icon' => 'M10 9v6l6-3V6z;M10 9v6', 'route' => '#'],
                 ['label' => 'Add Care Need', 'icon' => 'M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4', 'route' => '#'],
                 ['label' => 'Contact Admin', 'icon' => 'M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z;M22 6l-10 7L2 6', 'route' => '#'],
-                ['label' => 'Upload Document', 'icon' =>M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4;M17 8l-5-5-5 5;M12 3v12', 'route' => '#'],
+                ['label' => 'Upload Document', 'icon' => 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4;M17 8l-5-5-5 5;M12 3v12', 'route' => '#'],
             ];
         @endphp
         @foreach($actions as $action)

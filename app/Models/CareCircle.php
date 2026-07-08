@@ -39,4 +39,10 @@ class CareCircle extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Alias for backward compatibility
+    public function member(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

@@ -14,12 +14,16 @@ class ProviderController extends Controller
         $notifications = collect();
 
         try {
-            $todaySchedule = \App\Models\Intervention::where('provider_id', $user->id)
-                ->whereDate('scheduled_at', today())
-                ->with(['beneficiary', 'service'])
-                ->orderBy('scheduled_at')->get();
+            $provider = \App\Models\Provider::where('user_id', $user->id)->first();
 
-            $notifications = \App\Models\Alert::where('provider_id', $user->id)
+            if ($provider) {
+                $todaySchedule = \App\Models\Intervention::where('provider_id', $provider->id)
+                    ->whereDate('scheduled_at', today())
+                    ->with(['beneficiary', 'service'])
+                    ->orderBy('scheduled_at')->get();
+            }
+
+            $notifications = \App\Models\Alert::where('target_user_id', $user->id)
                 ->latest()->take(5)->get();
         } catch (\Exception $e) {}
 
@@ -35,9 +39,12 @@ class ProviderController extends Controller
     {
         $beneficiaries = collect();
         try {
-            $beneficiaries = \App\Models\Beneficiary::whereHas('interventions', function ($q) {
-                $q->where('provider_id', Auth::id());
-            })->get();
+            $provider = \App\Models\Provider::where('user_id', Auth::id())->first();
+            if ($provider) {
+                $beneficiaries = \App\Models\Beneficiary::whereHas('interventions', function ($q) use ($provider) {
+                    $q->where('provider_id', $provider->id);
+                })->with('user')->get();
+            }
         } catch (\Exception $e) {}
 
         return view('provider.beneficiaries', compact('beneficiaries'));
@@ -57,8 +64,11 @@ class ProviderController extends Controller
     {
         $services = collect();
         try {
-            $services = \App\Models\Service::where('provider_id', Auth::id())
-                ->orWhereNull('provider_id')->get();
+            $provider = \App\Models\Provider::where('user_id', Auth::id())->first();
+            if ($provider) {
+                $services = \App\Models\Service::where('provider_id', $provider->id)
+                    ->orWhereNull('provider_id')->get();
+            }
         } catch (\Exception $e) {}
 
         return view('provider.service-catalogue', compact('services'));
@@ -68,8 +78,11 @@ class ProviderController extends Controller
     {
         $reviews = collect();
         try {
-            $reviews = \App\Models\ProviderReview::where('provider_id', Auth::id())
-                ->latest()->get();
+            $provider = \App\Models\Provider::where('user_id', Auth::id())->first();
+            if ($provider) {
+                $reviews = \App\Models\ProviderReview::where('provider_id', $provider->id)
+                    ->latest()->get();
+            }
         } catch (\Exception $e) {}
 
         return view('provider.reviews', compact('reviews'));
@@ -82,8 +95,11 @@ class ProviderController extends Controller
         $stats = ['completion' => '95%', 'on_time' => '88%', 'satisfaction' => '4.7'];
 
         try {
-            $employees = \App\Models\User::where('company_id', Auth::id())
-                ->where('role_id', '!=', null)->get();
+            $provider = \App\Models\Provider::where('user_id', Auth::id())->first();
+            if ($provider && $provider->company_id) {
+                $employees = \App\Models\Provider::where('company_id', $provider->company_id)
+                    ->with('user')->get();
+            }
         } catch (\Exception $e) {}
 
         return view('provider.company-management', compact('employees', 'beneficiaries', 'stats'));

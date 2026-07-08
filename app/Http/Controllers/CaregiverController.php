@@ -17,21 +17,27 @@ class CaregiverController extends Controller
         $careCircle = collect();
 
         try {
-            $timeline = \App\Models\Intervention::where('caregiver_id', $user->id)
+            // Find beneficiary_ids for this caregiver via care_circles
+            $beneficiaryIds = \App\Models\CareCircle::where('user_id', $user->id)
+                ->where('member_type', 'caregiver')
+                ->where('status', 'active')
+                ->pluck('beneficiary_id');
+
+            $timeline = \App\Models\Intervention::whereIn('beneficiary_id', $beneficiaryIds)
                 ->with(['beneficiary', 'service'])->latest()->take(5)->get();
 
-            $alerts = \App\Models\Alert::where('caregiver_id', $user->id)
-                ->where('resolved', false)->latest()->take(5)->get();
+            $alerts = \App\Models\Alert::where('target_user_id', $user->id)
+                ->where('is_read', false)->latest()->take(5)->get();
 
-            $todaySchedule = \App\Models\Intervention::where('caregiver_id', $user->id)
+            $todaySchedule = \App\Models\Intervention::whereIn('beneficiary_id', $beneficiaryIds)
                 ->whereDate('scheduled_at', today())
                 ->with(['beneficiary', 'service'])->orderBy('scheduled_at')->get();
 
-            $careCircle = \App\Models\CareCircle::where('caregiver_id', $user->id)
-                ->with('member')->take(4)->get()->map(function ($c) {
+            $careCircle = \App\Models\CareCircle::where('user_id', $user->id)
+                ->with('beneficiary')->take(4)->get()->map(function ($c) {
                     return (object)[
-                        'name' => $c->member?->name ?? 'Member',
-                        'role' => $c->role ?? '',
+                        'name' => $c->beneficiary?->user?->name ?? 'Member',
+                        'role' => $c->member_type ?? '',
                         'status' => $c->status ?? 'active',
                     ];
                 });
@@ -44,7 +50,12 @@ class CaregiverController extends Controller
     {
         $events = collect();
         try {
-            $events = \App\Models\Intervention::where('caregiver_id', Auth::id())
+            $beneficiaryIds = \App\Models\CareCircle::where('user_id', Auth::id())
+                ->where('member_type', 'caregiver')
+                ->where('status', 'active')
+                ->pluck('beneficiary_id');
+
+            $events = \App\Models\Intervention::whereIn('beneficiary_id', $beneficiaryIds)
                 ->with(['beneficiary', 'service'])->latest()->paginate(20);
         } catch (\Exception $e) {}
 
@@ -55,8 +66,8 @@ class CaregiverController extends Controller
     {
         $alerts = collect();
         try {
-            $alerts = \App\Models\Alert::where('caregiver_id', Auth::id())
-                ->where('resolved', false)->latest()->get();
+            $alerts = \App\Models\Alert::where('target_user_id', Auth::id())
+                ->where('is_read', false)->latest()->get();
         } catch (\Exception $e) {}
 
         return view('caregiver.alerts-center', compact('alerts'));
@@ -66,9 +77,16 @@ class CaregiverController extends Controller
     {
         $providers = collect();
         try {
-            $providers = \App\Models\Provider::whereHas('careCircle', function ($q) {
-                $q->where('caregiver_id', Auth::id());
-            })->get();
+            $beneficiaryIds = \App\Models\CareCircle::where('user_id', Auth::id())
+                ->where('member_type', 'caregiver')
+                ->where('status', 'active')
+                ->pluck('beneficiary_id');
+
+            $providerIds = \App\Models\CareCircle::whereIn('beneficiary_id', $beneficiaryIds)
+                ->where('member_type', 'provider')
+                ->pluck('user_id');
+
+            $providers = \App\Models\Provider::whereIn('user_id', $providerIds)->with('user')->get();
         } catch (\Exception $e) {}
 
         return view('caregiver.providers-overview', compact('providers'));
