@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary w-full">Save Changes</button>
+        <button type="submit" class="btn-primary w-full">Save Changes</button>
     </form>
 </div>
 @endsection

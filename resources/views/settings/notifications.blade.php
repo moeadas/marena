@@ -31,7 +31,7 @@
                 <input type="checkbox" name="weekly_summary" value="1" @checked(in_array('weekly_summary', array_keys($p))) class="w-5 h-5 rounded text-marena-teal">
             </label>
         </div>
-        <button type="submit" class="btn btn-primary w-full mt-4">Save Preferences</button>
+        <button type="submit" class="btn-primary w-full mt-4">Save Preferences</button>
     </form>
 </div>
 @endsection

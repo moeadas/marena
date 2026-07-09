@@ -18,7 +18,7 @@
         <p class="text-sm text-marena-ink-50 mb-3">Download a complete backup of all data including users, interventions, reports, messages, and more. Keep this file safe — you can restore from it anytime.</p>
         <form method="POST" action="{{ route('backup.export') }}">
             @csrf
-            <button type="submit" class="btn btn-primary w-full">
+            <button type="submit" class="btn-primary w-full">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Download Backup
             </button>
@@ -40,7 +40,7 @@
         <form method="POST" action="{{ route('backup.import') }}" enctype="multipart/form-data">
             @csrf
             <input type="file" name="backup_file" accept=".json" class="input mb-3" required>
-            <button type="submit" class="btn btn-secondary w-full">
+            <button type="submit" class="btn-secondary w-full">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Import Backup File
             </button>
@@ -62,7 +62,7 @@
         <p class="text-sm text-marena-ink-50 mb-3">⚠️ This permanently deletes ALL data (users, beneficiaries, providers, interventions, reports, messages, etc.) except your admin account. This cannot be undone. Make sure you have a backup first.</p>
 
         <div x-data="{ showConfirm: false }">
-            <button @click="showConfirm = true" class="btn btn-danger w-full mb-3" x-show="!showConfirm">
+            <button @click="showConfirm = true" class="btn-danger w-full mb-3" x-show="!showConfirm">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Delete All Data
             </button>
@@ -74,8 +74,8 @@
                     @csrf
                     <input type="text" name="confirm" placeholder="Type DELETE" class="input mb-3 text-center font-bold" required>
                     <div class="flex gap-2">
-                        <button type="submit" class="btn btn-danger flex-1">Yes, Delete Everything</button>
-                        <button type="button" @click="showConfirm = false" class="btn btn-outline">Cancel</button>
+                        <button type="submit" class="btn-danger flex-1">Yes, Delete Everything</button>
+                        <button type="button" @click="showConfirm = false" class="btn-outline">Cancel</button>
                     </div>
                 </form>
             </div>

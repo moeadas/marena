@@ -23,7 +23,7 @@
     <form method="POST" action="{{ route('messages.send', $conversation) }}" class="flex gap-2">
         @csrf
         <input type="text" name="content" placeholder="Type a message..." class="input flex-1" required>
-        <button type="submit" class="btn btn-primary px-4">
+        <button type="submit" class="btn-primary px-4">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </button>
     </form>

@@ -24,7 +24,7 @@
                 <input type="password" name="password_confirmation" class="input" required>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary w-full">Update Password</button>
+        <button type="submit" class="btn-primary w-full">Update Password</button>
     </form>
 </div>
 @endsection

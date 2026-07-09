@@ -17,7 +17,7 @@
                             <svg class="w-5 h-5 text-marena-warn" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                         </div>
                         <div class="flex-1">
-                            <p class="font-medium text-sm text-marena-ink">{{ $request->beneficiary ?? 'Beneficiary' }}</p>
+                            <p class="font-medium text-sm text-marena-ink">{{ $request->beneficiary?->name ?? 'Beneficiary' }}</p>
                             <p class="text-xs text-marena-ink-50">{{ $request->service_type ?? '' }} &middot; {{ $request->urgency ?? 'Normal' }} &middot; {{ $request->created_at?->diffForHumans() ?? '' }}</p>
                         </div>
                         <x-status-badge :status="$request->status ?? 'pending'" />

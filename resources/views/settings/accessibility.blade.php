@@ -35,7 +35,7 @@
                 <input type="checkbox" name="voice_assistance" value="1" @checked(in_array('voice_assistance', array_keys($p))) class="w-6 h-6 rounded text-marena-teal" disabled>
             </label>
         </div>
-        <button type="submit" class="btn btn-primary w-full mt-4">Save Preferences</button>
+        <button type="submit" class="btn-primary w-full mt-4">Save Preferences</button>
     </form>
 </div>
 @endsection

@@ -58,10 +58,10 @@
         <p class="tagline">Care coordination made human</p>
         <div class="cta-group">
             @guest
-            <a href="{{ route('register') }}" class="btn btn-primary">Get Started</a>
-            <a href="{{ route('login') }}" class="btn btn-secondary">Log In</a>
+            <a href="{{ route('register') }}" class="btn-primary">Get Started</a>
+            <a href="{{ route('login') }}" class="btn-secondary">Log In</a>
             @else
-            <a href="{{ route('dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+            <a href="{{ route('dashboard') }}" class="btn-primary">Go to Dashboard</a>
             @endguest
         </div>
         <div class="features">

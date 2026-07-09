@@ -57,7 +57,7 @@
     <div class="mt-8 pt-6 border-t border-marena-ink-10">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="btn btn-outline w-full text-marena-danger border-marena-danger/30 hover:bg-marena-danger/5">
+            <button type="submit" class="btn-outline w-full text-marena-danger border-marena-danger/30 hover:bg-marena-danger/5">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 Log Out
             </button>

@@ -6,7 +6,7 @@
 @layer base {
     body {
         @apply bg-marena-cream text-marena-ink antialiased;
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -46,23 +46,28 @@
     }
 
     .btn-primary {
-        @apply btn bg-marena-teal text-white hover:bg-marena-teal-deep active:scale-[0.98];
+        @apply inline-flex items-center justify-center gap-2 px-5 h-12 rounded-xl font-medium text-base transition-all duration-200 select-none
+               bg-marena-teal text-marena-ivory hover:bg-marena-teal-deep active:scale-[0.98];
     }
 
     .btn-secondary {
-        @apply btn bg-marena-sage-mist text-marena-teal-deep hover:bg-marena-sage-light active:scale-[0.98];
+        @apply inline-flex items-center justify-center gap-2 px-5 h-12 rounded-xl font-medium text-base transition-all duration-200 select-none
+               bg-marena-sage-mist text-marena-teal-deep hover:bg-marena-sage-light active:scale-[0.98];
     }
 
     .btn-outline {
-        @apply btn border border-marena-ink-30 text-marena-ink-70 hover:border-marena-teal hover:text-marena-teal bg-transparent;
+        @apply inline-flex items-center justify-center gap-2 px-5 h-12 rounded-xl font-medium text-base transition-all duration-200 select-none
+               border border-marena-ink-30 text-marena-ink-70 hover:border-marena-teal hover:text-marena-teal bg-transparent;
     }
 
     .btn-danger {
-        @apply btn bg-marena-danger text-white hover:opacity-90 active:scale-[0.98];
+        @apply inline-flex items-center justify-center gap-2 px-5 h-12 rounded-xl font-medium text-base transition-all duration-200 select-none
+               bg-marena-danger text-white hover:opacity-90 active:scale-[0.98];
     }
 
     .btn-ghost {
-        @apply btn text-marena-ink-50 hover:text-marena-teal bg-transparent;
+        @apply inline-flex items-center justify-center gap-2 px-5 h-12 rounded-xl font-medium text-base transition-all duration-200 select-none
+               text-marena-ink-50 hover:text-marena-teal bg-transparent;
     }
 
     .btn-sm {
@@ -75,12 +80,12 @@
 
     /* Inputs */
     .input {
-        @apply w-full h-12 rounded-lg border border-marena-ink-30 bg-white px-4 text-marena-ink placeholder:text-marena-ink-50
+        @apply w-full h-12 rounded-xl border border-marena-ink-30 bg-marena-ivory px-4 text-marena-ink placeholder:text-marena-ink-50
                focus:border-marena-teal focus:ring-2 focus:ring-marena-teal/20 transition-colors;
     }
 
     .label {
-        @apply block text-sm font-medium text-marena-ink-70 mb-1.5;
+        @apply block text-xs font-semibold text-marena-ink-70 mb-1.5;
     }
 
     /* Status badges */
@@ -184,6 +189,22 @@
 
     .scrollbar-hide::-webkit-scrollbar {
         display: none;
+    }
+
+    /* mfade animation */
+    .mfade {
+        animation: mfade 0.3s ease-out;
+    }
+
+    @keyframes mfade {
+        from {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 }
 

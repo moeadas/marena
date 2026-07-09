@@ -21,12 +21,13 @@
     $iconPaths = explode(';', $icons[$severity] ?? $icons['medium']);
 @endphp
 
-<div class="card {{ $class }} flex items-start gap-3">
+<div class="card {{ $class }} flex items-start gap-3 mfade">
     <div class="flex-shrink-0 mt-0.5">
-        @foreach($iconPaths as $path)
-            <svg class="w-5 h-5 text-marena-ink-50" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="{{ $path }}"/></svg>
-            @break
-        @endforeach
+        <svg class="w-5 h-5 text-marena-ink-50" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            @foreach($iconPaths as $path)
+                <path d="{{ trim($path) }}"/>
+            @endforeach
+        </svg>
     </div>
     <div class="flex-1 min-w-0">
         <p class="font-medium text-sm text-marena-ink">{{ $title }}</p>

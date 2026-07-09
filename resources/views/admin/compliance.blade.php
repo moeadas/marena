@@ -30,7 +30,7 @@
                 <div class="card-tight flex items-center gap-3">
                     <svg class="w-5 h-5 text-marena-success flex-shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
                     <div class="flex-1 min-w-0">
-                        <p class="text-sm font-medium text-marena-ink">{{ $log->user ?? 'User' }}</p>
+                        <p class="text-sm font-medium text-marena-ink">{{ $log->user?->name ?? 'User' }}</p>
                         <p class="text-xs text-marena-ink-50">{{ $log->consent_type ?? '' }} &middot; {{ $log->created_at?->diffForHumans() ?? '' }}</p>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="w-2 h-2 rounded-full bg-marena-teal flex-shrink-0"></div>
                     <div class="flex-1 min-w-0">
                         <p class="text-sm text-marena-ink-70">{{ $audit->action ?? 'Action' }}</p>
-                        <p class="text-xs text-marena-ink-50">{{ $audit->user ?? '' }} &middot; {{ $audit->created_at?->format('M j, Y H:i') ?? '' }}</p>
+                        <p class="text-xs text-marena-ink-50">{{ $audit->user?->name ?? '' }} &middot; {{ $audit->created_at?->format('M j, Y H:i') ?? '' }}</p>
                     </div>
                 </div>
             @endforeach
